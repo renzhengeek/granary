@@ -297,6 +297,7 @@ ifeq ($(GR_CLIENT),lifetime)
 	GR_OBJS += $(BIN_DIR)/clients/lifetime/metadata.o
 	GR_OBJS += $(BIN_DIR)/clients/lifetime/instrument.o
 	GR_OBJS += $(BIN_DIR)/clients/lifetime/report.o
+	GR_OBJS += $(BIN_DIR)/tests/test_lifetime.o
 endif
 ifeq ($(GR_CLIENT),watchpoint_user)
 	GR_CXX_FLAGS += -DCLIENT_WATCHPOINT_USER -DCLIENT_WATCHPOINTS
@@ -387,7 +388,7 @@ endif
 # Try to disable memset/memcpy/memmove synthesizing optimisations, as well as
 # optimisations that use SSE registers.
 GR_FLOAT_FLAGS = -mno-mmx -mno-sse -mno-sse2 -mno-mmx -mno-3dnow
-GR_FLOAT_FLAGS += -fno-builtin -ffreestanding
+GR_FLOAT_FLAGS += -fno-builtin -ffreestanding -msoft-float -mtune=generic
 
 # User space.
 ifeq ($(KERNEL),0)
