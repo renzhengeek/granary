@@ -332,6 +332,7 @@ ifeq ($(GR_CLIENT),bounds_checker)
 	
 	GR_OBJS += $(BIN_DIR)/clients/watchpoints/clients/bounds_checker/instrument.o
 	GR_OBJS += $(BIN_DIR)/clients/watchpoints/clients/bounds_checker/bounds_checkers.o
+	GR_OBJS += ${BIN_DIR}/clients/watchpoints/clients/bounds_checker/report.o
 	
 	ifeq ($(KERNEL),0)
 		GR_OBJS += $(BIN_DIR)/clients/watchpoints/user/posix/signal.o

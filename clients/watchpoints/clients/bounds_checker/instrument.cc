@@ -9,12 +9,22 @@
 
 #include "clients/watchpoints/utils.h"
 #include "clients/watchpoints/clients/bounds_checker/instrument.h"
+#include "granary/types.h"
 
+extern "C" {
+	    extern int sprintf(char *buf, const char *fmt, ...);
+}
 
 using namespace granary;
 
 
-namespace client { namespace wp {
+namespace client {
+	
+	enum{ BUFF_SIZE = 1500 };
+	extern char BUFF[BUFF_SIZE];
+	extern int n;
+
+	namespace wp {
 
 
 #define DECLARE_BOUND_CHECKER(reg) \
@@ -238,12 +248,20 @@ namespace client { namespace wp {
         if(low_32 < descriptor->lower_bound) {
             IF_USER( printf("Access of size %u to %p in basic block %p underflowed\n",
                 size, unwatched_addr, *return_address_in_bb); )
+			IF_KERNEL( types::printk("Access of size %u to %p in basic block %p underflowed\n",
+				size, unwatched_addr, *return_address_in_bb); )
+			n += sprintf(&BUFF[n], "Access of size %u to %p in basic block %p underflowed\n",
+					size, unwatched_addr, *return_address_in_bb);
 
         // Overflow.
         } else {
             ASSERT((low_32 + size) > descriptor->upper_bound);
             IF_USER( printf("Access of size %u to %p in basic block %p overflowed\n",
                 size, unwatched_addr, *return_address_in_bb); )
+			IF_KERNEL( types::printk("Access of size %u to %p in basic block %p overflowed\n",
+				size, unwatched_addr, *return_address_in_bb); )
+			n += sprintf(&BUFF[n], "Access of size %u to %p in basic block %p overflowed\n",
+				size, unwatched_addr, *return_address_in_bb);
         }
 
         UNUSED(descriptor);
