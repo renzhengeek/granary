@@ -53,3 +53,9 @@ bin/*
 
 # ctags file
 tags
+
+#configurations
+Makefile
+.gdbinit
+mymake.sh
+qemu.sh

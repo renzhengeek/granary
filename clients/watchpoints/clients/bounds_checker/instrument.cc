@@ -199,6 +199,8 @@ namespace client { namespace wp {
         const unsigned reg_index = register_to_index(tracker.regs[i].value.reg);
         const unsigned size_index = operand_size_order(tracker.sizes[i]);
 
+		granary_do_break_on_translate = true;
+
         ASSERT(reg_index < 15);
         ASSERT(size_index < 5);
 
@@ -216,6 +218,9 @@ namespace client { namespace wp {
         watchpoint_tracker &tracker,
         unsigned i
     ) throw() {
+
+		granary_do_break_on_translate = true;
+
         if(!(SOURCE_OPERAND & tracker.ops[i].kind)) {
             visit_read(bb, ls, tracker, i);
         }

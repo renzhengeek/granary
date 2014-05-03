@@ -28,9 +28,9 @@ set-user-detect
 
 # Kernel setup
 if !$in_user_space
-  file ~/Code/linuxrcu/vmlinux
+  file ~/linux-3.8/vmlinux
   target remote : 9999
-  source ~/Code/Granary/granary.syms
+  source ~/granary/granary.syms
 end
 
 
@@ -40,6 +40,10 @@ b granary_fault
 b granary_break_on_fault
 b granary_break_on_translate
 b granary_break_on_curiosity
+b client::wp::bound_policy::visit_read
+b client::wp::bound_policy::visit_write
+b client::wp::visit_overflow
+
 
 # Kernel breakpoints
 if !$in_user_space
