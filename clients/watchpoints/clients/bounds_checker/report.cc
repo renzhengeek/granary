@@ -5,36 +5,22 @@
  *  Created on: 2013-10-22
  *      Author: Peter Goodman
  */
-
-#include "clients/instr_dist/instrument.h"
-
-extern "C" {
-    extern int sprintf(char *buf, const char *fmt, ...);
-}
+#include "report.h"
 
 using namespace granary;
 
 namespace client {
-   enum {
-       BUFF_SIZE = 1500,
-	   BUFF_FLUSH = 1000
-   };
-
 
    /// Output buffer.
    char BUFF[BUFF_SIZE] = {'\0'};
-   int n = 0;
+   int buf_idx = 0;
 
 
    /// Report on watchpoints statistics.
    void report(void) throw() {
-        if(BUFF_FLUSH <= n) {
-               granary::log(BUFF, n);
-               n = 0;
-        }
-
-       if(0 < n) {
-           granary::log(BUFF, n);
+       if(0 < buf_idx) {
+           granary::log(BUFF, buf_idx);
+		   buf_idx = 0;
        }
    }
 }

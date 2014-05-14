@@ -47,7 +47,7 @@ extern "C" {
     extern bool granary_takeover_next_syscall_entry(void);
 #endif
 
-#if 0
+#if 1
     /// Make a special init function that sets certain page permissions before
     /// executing the module's init function.
     GRANARY_ENTRYPOINT
@@ -104,7 +104,7 @@ extern "C" {
                 module->name);
 
             granary_before_module_bootstrap(module);
-#if 0
+#if 1 
             if(module->init) {
                 eflags flags = granary_disable_interrupts();
 

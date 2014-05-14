@@ -222,7 +222,7 @@
 ///       circumstance (which is addressable) and partly because of its
 ///       inability to regain control in the proper policy.
 #if CONFIG_ENV_KERNEL
-#   define CONFIG_FEATURE_WRAPPERS 0
+#   define CONFIG_FEATURE_WRAPPERS 1 
 #else
 #   define CONFIG_FEATURE_WRAPPERS 1 // Don't change?
 #endif

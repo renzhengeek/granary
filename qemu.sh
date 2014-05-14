@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SMP=2
+SMP=4
 MEM=1024
 NETWORK=e1000
 #NETWORK=virtio

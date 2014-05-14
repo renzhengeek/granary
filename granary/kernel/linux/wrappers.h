@@ -94,6 +94,8 @@
 #define APP_WRAPPER_FOR_struct_llist_head
 #define APP_WRAPPER_FOR_struct_llist_node
 
+//#define APP_WRAPPER_FOR_struct_net_device
+
 
 /// Disable wrapping of sk buffs as they are used so frequently with network
 /// drivers.
@@ -136,7 +138,7 @@
             PRE_OUT_WRAP(arg.npinfo);
             PRE_OUT_WRAP(arg.nd_net);
             PRE_OUT_WRAP(arg.dev);
-            PRE_OUT_WRAP(arg.priomap);
+            // PRE_OUT_WRAP(arg.priomap);
             PRE_OUT_WRAP(arg.phydev);
             PRE_OUT_WRAP(arg.pm_qos_req);
         }

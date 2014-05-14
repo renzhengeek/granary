@@ -9,23 +9,14 @@
 
 #include "clients/watchpoints/utils.h"
 #include "clients/watchpoints/clients/bounds_checker/instrument.h"
+#include "clients/watchpoints/clients/bounds_checker/report.h"
 #include "granary/types.h"
-
-extern "C" {
-	    extern int sprintf(char *buf, const char *fmt, ...);
-}
 
 using namespace granary;
 
-
 namespace client {
-	
-	enum{ BUFF_SIZE = 1500 };
-	extern char BUFF[BUFF_SIZE];
-	extern int n;
 
 	namespace wp {
-
 
 #define DECLARE_BOUND_CHECKER(reg) \
     extern void CAT(granary_bounds_check_1_, reg)(void); \
@@ -209,6 +200,8 @@ namespace client {
         const unsigned reg_index = register_to_index(tracker.regs[i].value.reg);
         const unsigned size_index = operand_size_order(tracker.sizes[i]);
 
+		//granary_do_break_on_translate = true;
+
         ASSERT(reg_index < 15);
         ASSERT(size_index < 5);
 
@@ -248,19 +241,21 @@ namespace client {
         if(low_32 < descriptor->lower_bound) {
             IF_USER( printf("Access of size %u to %p in basic block %p underflowed\n",
                 size, unwatched_addr, *return_address_in_bb); )
-			IF_KERNEL( types::printk("Access of size %u to %p in basic block %p underflowed\n",
+			
+		    IF_KERNEL( types::printk("Access of size %u to %p in basic block %p underflowed\n",
 				size, unwatched_addr, *return_address_in_bb); )
-			n += sprintf(&BUFF[n], "Access of size %u to %p in basic block %p underflowed\n",
-					size, unwatched_addr, *return_address_in_bb);
-
+			buf_idx += sprintf(&BUFF[buf_idx], "Access of size %u to %p in basic block %p overflowed\n",
+				size, unwatched_addr, *return_address_in_bb);
         // Overflow.
         } else {
             ASSERT((low_32 + size) > descriptor->upper_bound);
             IF_USER( printf("Access of size %u to %p in basic block %p overflowed\n",
                 size, unwatched_addr, *return_address_in_bb); )
-			IF_KERNEL( types::printk("Access of size %u to %p in basic block %p overflowed\n",
+		
+		    IF_KERNEL( types::printk("Access of size %u to %p in basic block %p overflowed\n",
 				size, unwatched_addr, *return_address_in_bb); )
-			n += sprintf(&BUFF[n], "Access of size %u to %p in basic block %p overflowed\n",
+		
+			buf_idx += sprintf(&BUFF[buf_idx], "Access of size %u to %p in basic block %p overflowed\n",
 				size, unwatched_addr, *return_address_in_bb);
         }
 

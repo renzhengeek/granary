@@ -41,8 +41,10 @@ b granary_break_on_fault
 b granary_break_on_translate
 b granary_break_on_curiosity
 b client::wp::bound_policy::visit_read
-b client::wp::bound_policy::visit_write
 b client::wp::visit_overflow
+b /home/renzhen/granary/granary/mangle.cc:209
+b /home/renzhen/granary/granary/kernel/linux/module.cc:67
+b granary_bounds_check_1
 
 # Kernel breakpoints
 if !$in_user_space
