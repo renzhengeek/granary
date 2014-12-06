@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SMP=4
-MEM=1024
+MEM=2048
 NETWORK=e1000
 #NETWORK=virtio
 GRAPHIC= #-nographic

@@ -16,4 +16,4 @@ if [ $# -gt 0 ]; then
 	echo "end of remake"
 fi
 
-python scripts/fastload.py --remote renzhen-vm
+python scripts/fastload.py --remote vm
